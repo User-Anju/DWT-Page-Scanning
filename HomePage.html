@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Scan Page</title>
+    <script type="text/javascript" src="Resources/dynamsoft.webtwain.initiate.js"></script>
+    <script type="text/javascript" src="Resources/dynamsoft.webtwain.config.js"></script>
+    <script src="Resources/dynamsoft.webtwain.min.js"></script>
+
+</head>
+<body>
+    <input type="button" value="Scan" onclick="AcquireImage();" />
+
+    <div id="dwtcontrolContainer"></div>
+
+    <script type="text/javascript">
+        var DWObject;
+
+        function Dynamsoft_OnReady() {
+            DWObject = Dynamsoft.DWT.GetWebTwain("dwtcontrolContainer");
+        }
+
+        function AcquireImage() {
+            if (DWObject) {
+                DWObject.SelectSourceAsync().then(function () {
+                    return DWObject.AcquireImageAsync({
+                        IfCloseSourceAfterAcquire: true
+                    });
+                }).catch(function (exp) {
+                    alert(exp.message);
+                });
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>
